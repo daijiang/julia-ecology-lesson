@@ -29,7 +29,7 @@ ecological data in Python.
 
 ## Lessons
 
-- [Short Introduction to Python](00-short-introduction-to-Python)
+- [Short Introduction to Julia](00-short-introduction-to-julia)
 - [Starting With Data](01-starting-with-data)
 - [Index Slice Subset](02-index-slice-subset)
 - [Data Types and Format](03-data-types-and-format)
