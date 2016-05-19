@@ -107,10 +107,10 @@ println(text)
 Julia knows unicode (utf-8) well. What it means, is that you can use symbols in
 your code. The following code, for example, is valid:
 
-~~~ julia
+``` julia
 α = 2
 α ∈ [1 2 3]
-~~~
+```
 
 We assign a value of 2 to the variable `α`, then use the `∈` symbol (which is a
 shortcut for `in`) to test whether 2 is in the list of values. This code will
@@ -124,66 +124,97 @@ immediately to the left of the letter in the top left corner). This triggers
 
 [jldoc]: http://docs.julialang.org/en/release-0.4/manual/unicode-input/
 
-### Sequential types: Lists and Tuples
+### Sequential types: arrays and tuples
 
-### Lists
+### Arrays
 
-**Lists** are a common data structure to hold a sequence of
-elements. Each element can be accessed by an index:
+**Arrays** are a common data structure to hold a sequence of elements alongside
+different dimensions. Elements can be accessed with their index:
 
-```python
->>> numbers = [1,2,3]
->>> numbers[0]
+``` julia
+julia> numbers = [1, 2, 3]
+3-element Array{Int64,1}:
+ 1
+ 2
+ 3
+
+julia> numbers[1]
 1
 ```
 
-A `for` loop can be used to access the elements in a list or other Python data
-structure one at a time:
+In Julia, indexes start at 1 (like in R), and not 0 (like in Python or C).
 
-```python
-for num in numbers:
-    print(num)
+Note that the type of `numbers` is `Array{Int64,1}`. This communicates three
+important pieces of information. First, this object is an array. Second, it
+holds values with the type `Int64`. Finally, it as `1` dimension. In Julia,
+arrays are "column-major", so an object with one dimension is a column vector.
+
+Compare with:
+
+``` julia
+julia> numbers_row = [1 2 3]
+1x3 Array{Int64,2}:
+ 1  2  3
+```
+
+This new object has two dimensions: three columns, and one row. We can easily
+write matrices (two-dimensional arrays) in-line:
+
+``` julia
+julia> eye_one = [1 0 0; 0 1 0; 0 0 1]
+3x3 Array{Int64,2}:
+ 1  0  0
+ 0  1  0
+ 0  0  1
+```
+
+Two-dimensional arrays are accessed by line first, and by column second:
+
+``` julia
+julia> eye_one[1, 3] = 1
 1
-2
-3
+
+julia> eye_one
+3x3 Array{Int64,2}:
+ 1  0  1
+ 0  1  0
+ 0  0  1
 ```
 
-**Indentation** is very important in Python. Note that the second line in the
-example above is indented. This is Python's way of marking a block of code. We will
-discuss this in more detail later.
+To add elements to the list, we can use the `append!` or `push!` functions. In
+Julia, the writing convention is that functions modifying their input have a `!`
+at the end. This way, you *know* something is going to happen.
 
-To add elements to the list, we can use the `append` method:
-
-```python
->>> numbers.append(4)
->>> print(numbers)
-[1,2,3,4]
+``` julia
+julia> push!(numbers, 4)
+4-element Array{Int64,1}:
+ 1
+ 2
+ 3
+ 4
+julia> append!(numbers, [5,6,7,8])
+8-element Array{Int64,1}:
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
 ```
 
-Methods are a way to interact with an object - like a list. We can use or apply
-a method to a variable or element using the dot `.`. To find out what methods are
- available, we can use the built-in `help` command:
+The difference between `push!` and `append!` is that the former adds *single
+values*, while the second adds *arrays*. To read the documentation of these
+functions, just type `?` at the Julia command prompt, and then type the function name:
 
-```python
-help(numbers)
+``` julia
+help?> push!
+search: push! pushdisplay
 
-Help on list object:
+  ..  push!(collection, items...) -> collection
 
-class list(object)
- |  list() -> new empty list
- |  list(iterable) -> new list initialized from iterable's items
- ...
-```
-
-We can also access a list of methods using `dir`. Some methods names are
-surrounded by double underscores. Those methods are called "special", and
-usually we access them in a different way. For example `__add__` method is
-responsible for the `+` operator.
-
-```python
-dir(numbers)
->>> dir(numbers)
-['__add__', '__class__', '__contains__', ...]
+  Insert one or more ``items`` at the end of ``collection``.
 ```
 
 ### Tuples
