@@ -4,17 +4,17 @@ root: .
 title: Data workflows and automation
 ---
 
-So far, we've used Python and the pandas library to explore and manipulate
-individual datasets by hand, much like we would do in a spreadsheet. The beauty
-of using a programming language like Python, though, comes from the ability to
-automate data processing through the use of loops and functions.
+So far, we've used Julia to explore and manipulate individual datasets by hand,
+much like we would do in a spreadsheet. The beauty of using a programming
+language like Julia, though, comes from the ability to automate data processing
+through the use of loops and functions.
 
 # Learning Objectives
 
-* Review the basics of a python for loop
+* Review the basics of a Julia `for` loop
 * Review how to create a function
 * Learn how to loop through a directory of files, to automate processing
-* Learn the basics of conditional statements (if, then, else)
+* Learn the basics of conditional statements (`if`, `then`, `else`)
 
 ## For loops
 
@@ -28,13 +28,13 @@ errors by making mistakes while processing each file by hand.
 Let's write a simple for loop that simulates what a kid would say during a
 spelling bee:
 
-```python
->>> word = 'species'
->>> print(word)
-species
+``` julia
+julia> word = "species"
+"species"
 
->>> for letter in word:
-...    print(letter)
+julia> for letter in word
+           println(letter)
+       end
 s
 p
 e
@@ -44,28 +44,22 @@ e
 s
 ```
 
-The line defining the loop must start with `for` and end with a colon, and the
-body of the loop must be indented.
+The line defining the loop must start with `for`, and the `for` loop ends with
+an `end` statement. Indentation is purely for readability.
 
 In this example, `letter` is the loop variable that takes the value of the next
 entry in `word` every time the loop goes around. We can call the loop variable
-anything we like. After the loop finishes, the loop variable will still exist
-and will have the value of the last entry in the collection:
-
-```python
->>> word = 'species'
->>> for letter in word:
-...    pass
-
->>> print('The loop variable is now: ' + letter)
-The loop variable is now: s
-```
+anything we like. Note that Julia has *scoping rules* (determining where
+variables exist): the value of `letter` do *not* exist outside of the loop. This
+is different from R and Python.
 
 We are not asking python to print the value of the loop variable anymore, but
 the for loop still runs and the value of `letter` changes on each pass through
 the loop. The statement `pass` in the body of the loop just means "do nothing".
 
 ### Challenge:
+
+<!-- TODO -->
 
 1. What happens if we don't include the `pass` statement?
 

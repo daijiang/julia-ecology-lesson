@@ -24,17 +24,17 @@ We are studying the species and weight of animals caught in plots in our study
 area. The dataset is stored as a `.csv` file: each row holds information for a
 single animal, and the columns represent:
 
-| Column           | Description                        |
-|------------------|------------------------------------|
-| record_id       | Unique id for the observation      |
-| month            | month of observation               |
-| day              | day of observation                 |
-| year             | year of observation                |
-| plot_id           | ID of a particular plot            |
-| species_id       | 2-letter code                      |
-| sex              | sex of animal ("M", "F")           |
-| hindfoot_length  | length of the hindfoot in mm
-| weight           | weight of the animal in grams      |
+| Column          | Description                   |
+|:----------------|:------------------------------|
+| record_id       | Unique id for the observation |
+| month           | month of observation          |
+| day             | day of observation            |
+| year            | year of observation           |
+| plot_id         | ID of a particular plot       |
+| species_id      | 2-letter code                 |
+| sex             | sex of animal ("M", "F")      |
+| hindfoot_length | length of the hindfoot in mm  |
+| weight          | weight of the animal in grams |
 
 
 ### Download lesson data
