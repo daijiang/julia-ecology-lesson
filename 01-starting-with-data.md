@@ -190,11 +190,11 @@ Now we can start manipulating our data. First, let's check the data type of the
 data stored in `surveys_df` using the `type` method. The `type` method and
 `__class__` attribute tell us that `surveys_df` is `<class 'pandas.core.frame.DataFrame'>`.
 
-```python
-type(surveys_df)
-# this does the same thing as the above!
-surveys_df.__class__
+``` julia
+julia> typeof(surveys_df)
+DataFrames.DataFrame
 ```
+
 We can also enter `surveys_df.dtypes` at our prompt to view the data type for each
 column in our DataFrame. `int64` represents numeric integer values - `int64` cells
 can not store decimals. `object` represents strings (letters and numbers). `float64`
