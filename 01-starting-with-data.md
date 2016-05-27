@@ -4,37 +4,41 @@ root: .
 title: Starting With Data
 ---
 
-## Working With Pandas DataFrames in Python
+## Working With DataFrames in Julia
 
 
 ### Learning Objectives
-* Explain what a library is, and what libraries are used for.
-* Load a Python/Pandas library.
-* Read tabular data from a file into Python using Pandas using `read_csv`.
-* Learn about the Pandas DataFrame object.
+* Explain what a package is, and what packages are used for.
+* Install and load a Julia package.
+* Read tabular data from a file into Julia using DataFrames.jl using `readtable`.
+* Learn about the DataFrame object.
 * Learn about data slicing and indexing.
 * Perform mathematical operations on numeric data.
 * Create simple plots of data.
 
 ## Presentation of the survey data
 
-For this lesson, we will be using the Portal Teaching data, a subset of the data from Ernst et al [Long-term monitoring and experimental manipulation of a Chihuahuan Desert ecosystem near Portal, Arizona, USA](http://www.esapubs.org/archive/ecol/E090/118/default.htm)
+For this lesson, we will be using the Portal Teaching data, a subset of the data
+from Ernst *et al.* [Long-term monitoring and experimental manipulation of a
+Chihuahuan Desert ecosystem near Portal, Arizona, USA][lter].
+
+[lter]: http://www.esapubs.org/archive/ecol/E090/118/default.htm
 
 We are studying the species and weight of animals caught in plots in our study
 area. The dataset is stored as a `.csv` file: each row holds information for a
 single animal, and the columns represent:
 
-| Column          | Description                   |
-|:----------------|:------------------------------|
-| record_id       | Unique id for the observation |
-| month           | month of observation          |
-| day             | day of observation            |
-| year            | year of observation           |
-| plot_id         | ID of a particular plot       |
-| species_id      | 2-letter code                 |
-| sex             | sex of animal ("M", "F")      |
-| hindfoot_length | length of the hindfoot in mm  |
-| weight          | weight of the animal in grams |
+| Column            | Description                   |
+|:------------------|:------------------------------|
+| `record_id`       | Unique id for the observation |
+| `month`           | month of observation          |
+| `day`             | day of observation            |
+| `year`            | year of observation           |
+| `plot_id`         | ID of a particular plot       |
+| `species_id`      | 2-letter code                 |
+| `sex`             | sex of animal ("M", "F")      |
+| `hindfoot_length` | length of the hindfoot in mm  |
+| `weight`          | weight of the animal in grams |
 
 
 ### Download lesson data
@@ -43,39 +47,63 @@ We will be using files from the [Portal Project Teaching Database](https://figsh
 
 This section will use the `surveys.csv` file that can be downloaded here: [https://ndownloader.figshare.com/files/2292172](https://ndownloader.figshare.com/files/2292172)
 
+It it easy to downloiad from within Julia:
+
+```julia
+julia> download("https://ndownloader.figshare.com/files/2292172", "surveys.csv")
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  997k  100  997k    0     0   469k      0  0:00:02  0:00:02 --:--:--  903k
+"surveys.csv"
+```
+
+The `download` function needs an URL, and the name of the file to write into. In
+this situation, we create a `surveys.csv` file in the current working directory.
+
 ---
 
 
-## About Libraries
-A library in Python contains a set of tools (called functions) that perform
-tasks on our data. Importing a library is like getting a piece of lab equipment
-out of a storage locker and setting it up on the bench for use in a project.
-Once a library is set up, it can be used or called to perform many tasks.
+## About packages
 
-## Pandas in Python
-One of the best options for working with tabular data in Python is to use the
-[Python Data Analysis Library](http://pandas.pydata.org/) (a.k.a. Pandas). The
-Pandas library provides data structures, produces high quality plots with
-[matplotlib](http://matplotlib.org/) and integrates nicely with other libraries
-that use [NumPy](http://www.numpy.org/) (which is another Python library) arrays.
+A package in Julia contains a set of tools (called functions) that perform
+tasks. Importing a package is like getting a piece of lab equipment out of a
+storage locker and setting it up on the bench for use in a project. Once a
+library is set up, it can be used or called to perform many tasks. Julia's
+package manager is built into the language, and can be called with `Pkg.add`,
+`Pkg.update`, *etc.*.
 
-Python doesn't load all of the libraries available to it by default. We have to
-add an `import` statement to our code in order to use library functions. To import
-a library, we use the syntax `import libraryName`. If we want to give the
-library a nickname to shorten the command, we can add `as nickNameHere`.  An
-example of importing the pandas library using the common nickname `pd` is below.
+## DataFrames
 
+One of the best options for working with tabular data in Julia is to use the
+[DataFrames.jl](https://github.com/JuliaStats/DataFrames.jl) package. It
+provides data structures, and integrates nicely with other tools like Gadfly for
+plotting, and SQLite packages. There is a good [online documentation][dfdoc].
 
-```python
-import pandas as pd
+[dfdoc]: http://juliastats.github.io/DataFrames.jl/latest/
+
+We can install DataFrames with:
+
+``` julia
+julia> Pkg.add("DataFrames")
 ```
 
-Each time we call a function that's in a library, we use the syntax
-`LibraryName.FunctionName`. Adding the library name with a `.` before the
-function name tells Python where to find the function. In the example above, we
-have imported Pandas as `pd`. This means we don't have to type out `pandas` each
-time we call a Pandas function.
+This line will likely take a while, and result in many lines being written to
+your terminal. This is normal. Julia is relatively verbose when it comes to
+package installation.
 
+Julia doesn't load all of the packages available to it by default. We have to
+add an `using` statement to our code in order to use package functions. To
+import a package, we use the syntax `using PackageName`:
+
+
+``` julia
+julia> using DataFrames
+```
+
+Contary to Python (and as in R), we do not *need* to write
+`PackageName.function` to access a function from a package (although we *can*).
 
 ## Lesson Overview
 
@@ -103,22 +131,20 @@ record_id,month,day,year,plot_id,species_id,sex,hindfoot_length,weight
 
 ### We want to:
 
-1. Load that data into memory using Python.
+1. Load that data into memory using Julia.
 2. Calculate the average weight of all individuals sampled, by species.
 3. Plot the average weights by species and perhaps by plot_id too.
 
-We can automate the process above using Python. It's efficient to spend time
+We can automate the process above using Julia. It's efficient to spend time
 building the code to perform these tasks because once it's built, we can use it
 over and over on different datasets that use a similar format. This makes our
 methods easily reproducible. We can also easily share our code with colleagues
 and they can replicate the same analysis.
 
-
-# Reading CSV Data Using Pandas
+# Reading CSV Data Using DataFrames
 
 We will begin by locating and reading our survey data which are in CSV format.
-We can use Pandas' `read_csv` function to pull the file directly into a
-[DataFrame](http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dataframe).
+We will use the `readtable` function to pull the file directly into a DataFrame.
 
 ## So What's a DataFrame?
 
@@ -127,73 +153,36 @@ types (including characters, integers, floating point values, factors and more)
 in columns. It is similar to a spreadsheet or an SQL table or the `data.frame` in
 R.
 
-First, let's make sure the Python Pandas library is loaded. We will import
-Pandas using the nickname `pd`.  This is a common convention on the internet,
-so if you look up Pandas usage, you will often see it this way.
+First, let's make sure the DataFrame package is loaded:
+
+``` julia
+julia> using DataFrames
+```
+
+Now we can read the `surveys.csv` file:
 
 ```python
-import pandas as pd
+julia> surveys_df = readtable("surveys.csv")
+35549×9 DataFrames.DataFrame
+│ Row   │ record_id │ month │ day │ year │ plot_id │ species_id │ sex │ hindfoot_length │ weight │
+├───────┼───────────┼───────┼─────┼──────┼─────────┼────────────┼─────┼─────────────────┼────────┤
+│ 1     │ 1         │ 7     │ 16  │ 1977 │ 2       │ "NL"       │ "M" │ 32              │ NA     │
+│ 2     │ 2         │ 7     │ 16  │ 1977 │ 3       │ "NL"       │ "M" │ 33              │ NA     │
+│ 3     │ 3         │ 7     │ 16  │ 1977 │ 2       │ "DM"       │ "F" │ 37              │ NA     │
 ```
 
-Let's also import the [OS Library](https://docs.python.org/3/library/os.html).
-This library allows us to make sure we are in the correct working directory. If
-you are working in IPython Notebook, be sure to start the notebook in the
-workshop repository.  If you didn't do that you can always set the working
-directory using the code below.
+
+We can see that there were 33,549 rows parsed. Each row has 9 columns. It looks
+like the `readtable` function in Pandas read our file properly, and gave us a
+nice-looking output in addition! We have also assigned the DataFrame to the
+`surveys_df` variable.
+
+Notice that even when you assign the imported DataFrame to a variable, Julia
+does produce an output on the screen. This can be avoided by adding a semicolon at the end of the line:
 
 ```python
-import os
-os.getcwd()
-# if this directory isn't right, use the command below to set the working directory
-os.chdir("YOURPathHere")
+julia> surveys_df = readtable("surveys.csv");
 ```
-
-```python
-# note that pd.read_csv is used because we imported pandas as pd
-pd.read_csv("surveys.csv")
-```
-
-The above command yields the **output** below:
-
-```
-record_id  month  day  year  plot_id species_id sex  hindfoot_length  weight
-0          1      7   16  1977        2         NL   M               32   NaN
-1          2      7   16  1977        3         NL   M               33   NaN
-2          3      7   16  1977        2         DM   F               37   NaN
-3          4      7   16  1977        7         DM   M               36   NaN
-4          5      7   16  1977        3         DM   M               35   NaN
-...
-35544      35545     12   31  2002       15     AH  NaN              NaN  NaN
-35545      35546     12   31  2002       15     AH  NaN              NaN  NaN
-35546      35547     12   31  2002       10     RM    F               15   14
-35547      35548     12   31  2002        7     DO    M               36   51
-35548      35549     12   31  2002        5     NaN  NaN             NaN  NaN
-
-[35549 rows x 9 columns]
-```
-
-We can see that there were 33,549 rows parsed. Each row has 9
-columns. It looks like  the `read_csv` function in Pandas read our file
-properly. However, we haven't saved any data to memory so we can work with it.
-We need to assign the DataFrame to a variable. Remember that a variable is a
-name for a value, such as `x`, or  `data`. We can create a new object with a
-variable name by assigning a value to it using `=`.
-
-Let's call the imported survey data `surveys_df`:
-
-```python
-surveys_df = pd.read_csv("surveys.csv")
-```
-
-Notice when you assign the imported DataFrame to a variable, Python does not
-produce any output on the screen. We can print the value of the `surveys_df`
-object by typing its name into the Python command prompt.
-
-```python
-surveys_df
-```
-
-which prints contents like above
 
 ## Manipulating Our Species Survey Data
 

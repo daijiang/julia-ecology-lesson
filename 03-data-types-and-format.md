@@ -55,12 +55,12 @@ for mathematical operations**!
 Pandas and base Python use slightly different names for data types. More on this
 is in the table below:
 
-| Pandas Type | Native Python Type | Description |
-|-------------|--------------------|-------------|
-| object | string | The most general dtype. Will be assigned to your column if column has mixed types (numbers and strings). |
-| int64  | int | Numeric characters. 64 refers to the memory allocated to hold this character. |
-| float64 | float | Numeric characters with decimals. If a column contains numbers and NaNs(see below), pandas will default to float64, in case your missing value has a decimal. |
-| datetime64, timedelta[ns] | N/A (but see the [datetime] module in Python's standard library) | Values meant to hold time data. Look into these for time series experiments. |
+| Pandas Type               | Native Python Type                                               | Description                                                                                                                                                   |
+|:--------------------------|:-----------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| object                    | string                                                           | The most general dtype. Will be assigned to your column if column has mixed types (numbers and strings).                                                      |
+| int64                     | int                                                              | Numeric characters. 64 refers to the memory allocated to hold this character.                                                                                 |
+| float64                   | float                                                            | Numeric characters with decimals. If a column contains numbers and NaNs(see below), pandas will default to float64, in case your missing value has a decimal. |
+| datetime64, timedelta[ns] | N/A (but see the [datetime] module in Python's standard library) | Values meant to hold time data. Look into these for time series experiments.                                                                                  |
 
 [datetime]: http://doc.python.org/2/library/datetime.html
 
@@ -68,7 +68,7 @@ is in the table below:
 ## Checking the format of our data
 
 Now that we're armed with a basic understanding of numeric and character data
-types, let's explore the format of our survey data. We'll be working with the 
+types, let's explore the format of our survey data. We'll be working with the
 same `surveys.csv` dataset that we've used in previous lessons.
 
 ```python
@@ -150,7 +150,7 @@ print(24-4)
 
 If we divide one integer by another, we get a float.
 The result on python 3 is different than in python 2, where the result is an
-integer (integer division). 
+integer (integer division).
 
 ```python
 print(5/9)
